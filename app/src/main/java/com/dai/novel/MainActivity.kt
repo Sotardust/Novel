@@ -1,19 +1,23 @@
 package com.dai.novel
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.Html
+import com.dai.novel.database.DataBase
 import com.dai.novel.util.OkHttpUtils
 import com.dai.novel.util.URLUtil
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        DataBase().setBookListAttribute("一年永恒")
+        DataBase().setBookListAttribute("一念")
+        DataBase().saveBookAllListData(applicationContext)
         textView.setOnClickListener { getWebData(URLUtil().getUrl()) }
     }
 

@@ -14,6 +14,8 @@ import okhttp3.Request
 open class OkHttpUtils {
 
     fun getSingleGetRequest(url: String): Single<String> {
+
+
         return Single.create(SingleOnSubscribe<String> { emitter ->
             val okHttpClient = OkHttpClient();
             val request = Request.Builder()
