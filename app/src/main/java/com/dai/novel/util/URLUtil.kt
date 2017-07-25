@@ -6,4 +6,5 @@ package com.dai.novel.util
 
 open class URLUtil {
     fun getUrl(): String = "http://www.biqukan.com/1_1094/15278839.html";
+//    fun getUrl(): String = "http://www.biqukan.com/1_1094/15283982.html";
 }

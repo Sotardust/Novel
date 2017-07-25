@@ -23,7 +23,7 @@ open class OkHttpUtils {
                     .build()
             val response = okHttpClient.newCall(request).execute();
             val content = response.body().string();
-            println("content = ${content}")
+//            println("content = ${content}")
             emitter.onSuccess(content)
 
         }).subscribeOn(Schedulers.io())
