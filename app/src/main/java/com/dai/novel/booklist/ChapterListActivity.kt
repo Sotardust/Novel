@@ -20,12 +20,13 @@ class ChapterListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chapter_list)
-        val tableName = Intent().getStringExtra("tableName")
+        val tableName = intent.getStringExtra("tableName")
         val adapter = ChapterListAdapter()
 
         chapterListRecycler.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         chapterListRecycler.addItemDecoration(SpaceItemDecoration(2))
-        val list = SQLiteOpenHelper(applicationContext).getAllBookNameListData(tableName);
+        println("tableName = ${tableName}")
+        val list = SQLiteOpenHelper(applicationContext).getAllBookNameListData(tableName)
         adapter.data = list
         chapterListRecycler.adapter = adapter
 //        chapterListRecycler.scrollToPosition(adapter.itemCount)

@@ -35,6 +35,7 @@ class MainActivity : BaseActivity() {
         bookListRecycler.adapter = adapter
         adapter.setOnItemClickLister(object : BaseRecyclerAdapter.OnItemClickLister<String> {
             override fun onItemClick(position: Int, data: String) {
+                println("data = ${data}")
                 toast(data)
                 val intent = Intent().setClass(applicationContext, ChapterListActivity::class.java)
                 intent.putExtra("tableName", data)

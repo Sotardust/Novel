@@ -66,12 +66,10 @@ open class SQLiteOpenHelper(ctx: Context) {
         print("queryChapterContent")
         var content: String? = null
         context.database.use {
-            println("title = ${title}")
             val list = select(bookContent, BookContent.CONTENT).whereSimple("${BookContent.TITLE} =?", title).parseList(NovelChapterRowParser())
             for (li in list) {
                 content = li
             }
-//           val content = select(bookContent, BookContent.CONTENT).whereArgs("${BookContent.TITLE}=$title").parseList { Company(HashMap(it)) }
             println("content = ${content}")
         }
         return content!!
@@ -94,13 +92,9 @@ open class SQLiteOpenHelper(ctx: Context) {
     fun getAllBookNameListData(tableName: String): ArrayList<String> {
         val arrayList = ArrayList<String>()
         context.database.use {
-            val cursor = query(BookContent.NAME, null, null, null, null, null, null)
             val list = select(bookContent, BookContent.TITLE).whereSimple("${BookContent.BOOK_NAME} =?", tableName).parseList(NovelChapterRowParser())
-            for (index in list.size - 1..0) {
-                println("list[${index}] = ${list[index]}")
-                val json = JSONObject()
-                arrayList.add(list[index])
-            }
+            val length = list.size - 1
+            (0..length).mapTo(arrayList) { list[length - it] }
         }
         return arrayList
     }
@@ -111,7 +105,6 @@ open class SQLiteOpenHelper(ctx: Context) {
             values.put(BookList.TITLE, title)
             values.put(BookList.BOOK_NAME, bookName)
             insert(bookList, null, values)
-            println("insertBookListData")
         }
     }
 
@@ -128,9 +121,6 @@ open class SQLiteOpenHelper(ctx: Context) {
 
     fun updateBookListData(bookName: String, title: String) {
         context.database.use {
-            println("updateBookNameTitle = ")
-            println("bookName = ${bookName}")
-            println("title = ${title}")
             update(bookList, BookList.TITLE to title).`whereSimple`(" ${BookList.BOOK_NAME} =?", bookName).exec()
         }
     }
