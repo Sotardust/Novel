@@ -18,4 +18,15 @@ open class BookList(context: Context) {
     }
 
     fun getBookName(): MutableMap<String, *>? = bookName.all
+
+    private val keyNextChapter = "next_chapter"
+    val nextChapter: SharedPreferences by lazy {
+        context.getSharedPreferences(keyNextChapter, Context.MODE_PRIVATE)
+    }
+
+    fun setNextChapter(key: String, value: String) {
+        nextChapter.edit().putString(key, value).apply();
+    }
+
+    fun getNextChapter(): MutableMap<String, *>? = nextChapter.all
 }

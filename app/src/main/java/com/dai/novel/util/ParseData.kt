@@ -14,13 +14,18 @@ class ParseData(val context: Context) {
 
     var string: String? = null;
 
-    fun getNetNovelData(url: String) {
-        OkHttpUtils().getSingleGetRequest(url)
+    fun getNetNovelData(url: String, key: String) {
+
+        val bookList = BookList(context)
+        val nextChapter: MutableMap<String, String> = bookList.getNextChapter() as MutableMap<String, String>
+        val mURL: String = if (nextChapter.isNotEmpty() && nextChapter.containsKey(key)) nextChapter[key] as String else url
+        var bookName: String? = null
+        OkHttpUtils().getSingleGetRequest(mURL)
                 .subscribe(object : SingleObserver<String> {
                     override fun onError(e: Throwable?) {
                         e?.printStackTrace()
                         if (parseNextChapter().contains("html")) {
-                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()))
+                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!)
                         }
                     }
 
@@ -30,21 +35,21 @@ class ParseData(val context: Context) {
                     override fun onSuccess(value: String?) {
                         string = value
                         val title = parseTitle()
-                        val bookName = parseBookName()
                         val content = parseContext()
-                        val bookList = BookList(context)
+                        bookName = parseBookName()
                         val list: MutableMap<String, String> = bookList.getBookName() as MutableMap<String, String>
-                        val flag = list.keys.contains(bookName)
-                        bookList.setBookName(bookName, title)
+                        val flag = list.keys.contains(bookName!!)
+                        bookList.setBookName(bookName!!, title)
+                        bookList.setNextChapter(bookName!!, URLUtil().getUrl(parseNextChapter()))
 
                         when (flag) {
-                            true -> SQLiteOpenHelper(context).updateBookListData(bookName, title)
-                            else -> SQLiteOpenHelper(context).insertBookListData(bookName, title)
+                            true -> SQLiteOpenHelper(context).updateBookListData(bookName!!, title)
+                            else -> SQLiteOpenHelper(context).insertBookListData(bookName!!, title)
                         }
-                        SQLiteOpenHelper(context).insertBookContentData(title, content)
+                        SQLiteOpenHelper(context).insertBookContentData(bookName!!, title, content)
 
                         if (parseNextChapter().contains("html")) {
-                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()))
+                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!)
                         }
                         println("parseTitle() = ${parseTitle()}")
                         println("parseBookName() = ${parseBookName()}")

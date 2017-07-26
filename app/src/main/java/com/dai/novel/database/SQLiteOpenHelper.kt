@@ -6,8 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Environment
 import com.dai.novel.NovelApplication
-import org.jetbrains.anko.db.RowParser
-import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.update
 import org.json.JSONObject
@@ -68,46 +66,16 @@ open class SQLiteOpenHelper(ctx: Context) {
         print("queryChapterContent")
         var content: String? = null
         context.database.use {
-            val row = arrayOf(BookContent.ID, BookContent.TITLE, BookContent.content)
             println("title = ${title}")
-            val list = select(bookContent, BookContent.content).whereSimple("${BookContent.TITLE} =?", title).parseList(MyRowParser())
+            val list = select(bookContent, BookContent.CONTENT).whereSimple("${BookContent.TITLE} =?", title).parseList(NovelChapterRowParser())
             for (li in list) {
                 content = li
             }
-//           val content = select(bookContent, BookContent.content).whereArgs("${BookContent.TITLE}=$title").parseList { Company(HashMap(it)) }
+//           val content = select(bookContent, BookContent.CONTENT).whereArgs("${BookContent.TITLE}=$title").parseList { Company(HashMap(it)) }
             println("content = ${content}")
         }
         return content!!
     }
-//
-//    interface RowParser<T> {
-//        fun parseRow(columns: Array<Any>): T
-//    }
-//
-//    class RowP : RowParser<String> {
-//        override fun parseRow(columns: Array<Any>): String {
-//            return columns[2] as String
-//        }
-//
-//    }
-
-    class Chapter(val id: Int, val title: String, val content: String)
-
-    var rowParser = classParser<Chapter>()
-
-    class MyRowParser : RowParser<String> {
-        override fun parseRow(columns: Array<Any?>): String {
-            for (item in columns) {
-                println("item = $item")
-            }
-            return columns[0] as String
-        }
-
-    }
-
-//    val parser = rowParser { id: Int, name: String, email: String ->
-//        Triple(id, name, email)
-//    }
 
     fun getAllBookListData(): ArrayList<JSONObject> {
         context.database.use {
@@ -123,18 +91,18 @@ open class SQLiteOpenHelper(ctx: Context) {
         return bookAllList
     }
 
-    fun getAllBookContentData(): ArrayList<JSONObject> {
+    fun getAllBookNameListData(tableName: String): ArrayList<String> {
+        val arrayList = ArrayList<String>()
         context.database.use {
             val cursor = query(BookContent.NAME, null, null, null, null, null, null)
-            while (cursor.moveToNext()) {
+            val list = select(bookContent, BookContent.TITLE).whereSimple("${BookContent.BOOK_NAME} =?", tableName).parseList(NovelChapterRowParser())
+            for (index in list.size - 1..0) {
+                println("list[${index}] = ${list[index]}")
                 val json = JSONObject()
-                json.put(BookContent.TITLE, cursor.getString(1))
-                json.put(BookContent.content, cursor.getString(2))
-                bookAllList.add(json)
+                arrayList.add(list[index])
             }
-            cursor.close()
         }
-        return bookAllList
+        return arrayList
     }
 
     fun insertBookListData(bookName: String, title: String) {
@@ -147,11 +115,12 @@ open class SQLiteOpenHelper(ctx: Context) {
         }
     }
 
-    fun insertBookContentData(title: String, content: String) {
+    fun insertBookContentData(bookName: String, title: String, content: String) {
         context.database.use {
             val values = ContentValues()
+            values.put(BookContent.BOOK_NAME, bookName)
             values.put(BookContent.TITLE, title)
-            values.put(BookContent.content, content)
+            values.put(BookContent.CONTENT, content)
             insert(bookContent, null, values)
             println("insertBookContentData")
         }

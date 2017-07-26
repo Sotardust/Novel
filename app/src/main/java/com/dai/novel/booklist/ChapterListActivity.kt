@@ -7,7 +7,6 @@ import com.dai.novel.BaseActivity
 import com.dai.novel.R
 import com.dai.novel.adapter.BaseRecyclerAdapter
 import com.dai.novel.adapter.ChapterListAdapter
-import com.dai.novel.database.BookContent
 import com.dai.novel.database.SQLiteOpenHelper
 import com.dai.novel.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_chapter_list.*
@@ -21,18 +20,13 @@ class ChapterListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chapter_list)
+        val tableName = Intent().getStringExtra("tableName")
         val adapter = ChapterListAdapter()
 
         chapterListRecycler.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         chapterListRecycler.addItemDecoration(SpaceItemDecoration(2))
-        val list = SQLiteOpenHelper(applicationContext).getAllBookContentData();
-        val titleList = ArrayList<String>()
-        val dataList = ArrayList<String>()
-        list.mapTo(titleList) { it.getString(BookContent.TITLE) }
-        for (index in titleList.size - 1..0) {
-            dataList.add(titleList[index])
-        }
-        adapter.data = titleList
+        val list = SQLiteOpenHelper(applicationContext).getAllBookNameListData(tableName);
+        adapter.data = list
         chapterListRecycler.adapter = adapter
 //        chapterListRecycler.scrollToPosition(adapter.itemCount)
         adapter.setOnItemClickLister(object : BaseRecyclerAdapter.OnItemClickLister<String> {

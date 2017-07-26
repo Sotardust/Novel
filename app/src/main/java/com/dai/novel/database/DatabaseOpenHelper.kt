@@ -27,8 +27,9 @@ open class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "nove
 
         db.createTable(BookContent.NAME, true,
                 BookContent.ID to INTEGER + PRIMARY_KEY,
+                BookContent.BOOK_NAME to TEXT,
                 BookContent.TITLE to TEXT,
-                BookContent.content to TEXT)
+                BookContent.CONTENT to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

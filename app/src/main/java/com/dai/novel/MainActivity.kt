@@ -37,6 +37,7 @@ class MainActivity : BaseActivity() {
             override fun onItemClick(position: Int, data: String) {
                 toast(data)
                 val intent = Intent().setClass(applicationContext, ChapterListActivity::class.java)
+                intent.putExtra("tableName", data)
                 startActivity(intent)
             }
 
@@ -47,8 +48,8 @@ class MainActivity : BaseActivity() {
         })
 
 
-        textView.setOnClickListener { ParseData(applicationContext).getNetNovelData(URLUtil().getUrl("/1_1094/5386270.html")) }
-        textView1.setOnClickListener { ParseData(applicationContext).getNetNovelData(URLUtil().getUrl("/1_1583/7778655.html")) }
+        textView.setOnClickListener { ParseData(applicationContext).getNetNovelData(URLUtil().getUrl("/1_1094/5386270.html"), "一念永恒") }
+        textView1.setOnClickListener { ParseData(applicationContext).getNetNovelData(URLUtil().getUrl("/1_1583/7778655.html"), "圣墟") }
     }
 
 }

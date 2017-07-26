@@ -16,6 +16,7 @@ object BookList {
 object BookContent {
     val NAME = "bookContent"
     val ID = "id"
+    val BOOK_NAME = "bookName"
     val TITLE = "title"
-    val content = "content"
+    val CONTENT = "content"
 }
