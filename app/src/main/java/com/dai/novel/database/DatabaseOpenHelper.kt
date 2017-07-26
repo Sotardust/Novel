@@ -24,11 +24,18 @@ open class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "nove
                 BookList.ID to INTEGER + PRIMARY_KEY,
                 BookList.BOOK_NAME to TEXT,
                 BookList.TITLE to TEXT)
+
+        db.createTable(BookContent.NAME, true,
+                BookContent.ID to INTEGER + PRIMARY_KEY,
+                BookContent.TITLE to TEXT,
+                BookContent.content to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         println("onUpgrade")
         db.dropTable(BookList.NAME, true)
+        db.dropTable(BookContent.NAME, true)
+        onCreate(db)
     }
 }
 

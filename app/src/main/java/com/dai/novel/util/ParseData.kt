@@ -14,13 +14,14 @@ class ParseData(val context: Context) {
 
     var string: String? = null;
 
-    fun getWebData(url: String) {
+    fun getNetNovelData(url: String) {
         OkHttpUtils().getSingleGetRequest(url)
                 .subscribe(object : SingleObserver<String> {
                     override fun onError(e: Throwable?) {
                         e?.printStackTrace()
-
-                        println("e = ${e.toString()}")
+                        if (parseNextChapter().contains("html")) {
+                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()))
+                        }
                     }
 
                     override fun onSubscribe(d: Disposable?) {
@@ -30,14 +31,20 @@ class ParseData(val context: Context) {
                         string = value
                         val title = parseTitle()
                         val bookName = parseBookName()
+                        val content = parseContext()
                         val bookList = BookList(context)
                         val list: MutableMap<String, String> = bookList.getBookName() as MutableMap<String, String>
                         val flag = list.keys.contains(bookName)
                         bookList.setBookName(bookName, title)
 
                         when (flag) {
-                            true -> SQLiteOpenHelper(context).updateData(bookName, title)
-                            else -> SQLiteOpenHelper(context).insertData(bookName, title)
+                            true -> SQLiteOpenHelper(context).updateBookListData(bookName, title)
+                            else -> SQLiteOpenHelper(context).insertBookListData(bookName, title)
+                        }
+                        SQLiteOpenHelper(context).insertBookContentData(title, content)
+
+                        if (parseNextChapter().contains("html")) {
+                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()))
                         }
                         println("parseTitle() = ${parseTitle()}")
                         println("parseBookName() = ${parseBookName()}")

@@ -5,6 +5,9 @@ package com.dai.novel.util
  */
 
 open class URLUtil {
-    fun getUrl(): String = "http://www.biqukan.com/1_1094/15278839.html";
+
+    // url = http://www.biqukan.com/1_1583/7778655.html 圣墟
+    // url = http://www.biqukan.com/1_1094/5386270.html 一念永恒
+    fun getUrl(nextChapter: String): String = "http://www.biqukan.com" + nextChapter;
 //    fun getUrl(): String = "http://www.biqukan.com/1_1094/15283982.html";
 }

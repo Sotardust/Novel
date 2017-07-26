@@ -14,5 +14,8 @@ object BookList {
 
 //书内容表
 object BookContent {
-
+    val NAME = "bookContent"
+    val ID = "id"
+    val TITLE = "title"
+    val content = "content"
 }
