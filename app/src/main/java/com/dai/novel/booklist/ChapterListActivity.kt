@@ -3,7 +3,7 @@ package com.dai.novel.booklist
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.dai.novel.BaseActivity
+import com.dai.novel.activity.BaseActivity
 import com.dai.novel.R
 import com.dai.novel.adapter.BaseRecyclerAdapter
 import com.dai.novel.adapter.ChapterListAdapter

@@ -4,4 +4,54 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
+    <color name="white_54">#FAFAFA</color>
+    <color name="red">#FF0000</color>
+    <color name="lighter_gray">#ddd</color>
+    <color name="shallow_gray">#EEEEEE</color>
+    <color name="shallow_interval">#edf0f5</color>
+    <color name="orange">#fff4511e</color>
+    <color name="tangerine">#fc631d</color>
+    <color name="gray">#808080</color>
+    <color name="bottom_tab_selected_color">#0e7aef</color>
+    <color name="bottom_tab_unselected_color">#878787</color>
+    <color name="translucent">#00000000</color>
+    <color name="first_level_directory_text_color">#353535</color>
+    <color name="text_color">#353535</color>
+    <color name="data_title">#353535</color>
+    <color name="approval_data_color">#7e7e7e</color>
+    <color name="batch_approving_title">#cae3ff</color>
+    <color name="batch_approving_number">#0e7aef</color>
+    <color name="batch_approving_time">#7e7e7e</color>
+    <color name="bottom_count_row_data">#c7c7c7</color>
+    <color name="line_gray">#e6e6e6</color>
+    <color name="list_line_gray">#6e6e6e</color>
+    <color name="hint_gray">#bababa</color>
+    <color name="message_push">#edf0f5</color>
+    <color name="login_color">#3B94F2</color>
+    <color name="transparency_60">#99ffffff</color>
+    <color name="transparency_50">#80ffffff</color>
+    <color name="transparency_30">#4dffffff</color>
+    <color name="personal_item_left_info">#2c2c2c</color>
+    <color name="personal_item_right_info">#848282</color>
+    <color name="attendance_location">#878787</color>
+    <color name="attendance_remarks">#c4c4c4</color>
+
+
+    <color name="hint_color_text">#cccccc</color>
+    <color name="black">#111111</color>
+    <color name="font_black">#333333</color>
+
+    <color name="maincolor1">#63B8FF</color>
+    <color name="white1">#FFFFFD</color>
+    <color name="maintextcolor2">#848484</color>
+    <color name="maingraycolor13">#ccd0d0</color>
+    <color name="tran1">#00000000</color>
+
+    <!-- ui 2.0-->
+    <color name="main_search_line_color">#EBEDF0</color>
+    <color name="msg_item_title">#43474C</color>
+    <color name="msg_item_desc">#6F7680</color>
+    <color name="msg_item_time">#9BA5B2</color>
+    <color name="msg_item_name_en">#707780</color>
+    <color name="top_nav_text">#0088FF</color>
 </resources>

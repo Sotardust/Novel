@@ -1,6 +1,7 @@
 package com.dai.novel.util
 
 import android.content.Context
+import com.dai.novel.adapter.ObtainNovelAdapter
 import com.dai.novel.database.SQLiteOpenHelper
 import com.dai.novel.preference.BookList
 import io.reactivex.SingleObserver
@@ -14,18 +15,23 @@ class ParseData(val context: Context) {
 
     var string: String? = null;
 
-    fun getNetNovelData(url: String, key: String) {
+    fun getNetNovelData(url: String, key: String, adapter: ObtainNovelAdapter, dataList: ArrayList<String>, position: Int) {
 
         val bookList = BookList(context)
         val nextChapter: MutableMap<String, String> = bookList.getNextChapter() as MutableMap<String, String>
         val mURL: String = if (nextChapter.isNotEmpty() && nextChapter.containsKey(key)) nextChapter[key] as String else url
+        if (!mURL.contains("html")) {
+            dataList[position] = "${key}已更新到最新章节"
+            adapter.data = dataList
+            return
+        }
         var bookName: String? = null
         OkHttpUtils().getSingleGetRequest(mURL)
                 .subscribe(object : SingleObserver<String> {
                     override fun onError(e: Throwable?) {
                         e?.printStackTrace()
                         if (parseNextChapter().contains("html")) {
-                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!)
+                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!, adapter = adapter, dataList = dataList, position = position)
                         }
                     }
 
@@ -42,6 +48,9 @@ class ParseData(val context: Context) {
                         bookList.setBookName(bookName!!, title)
                         bookList.setNextChapter(bookName!!, URLUtil().getUrl(parseNextChapter()))
 
+
+                        dataList[position] = title
+                        adapter.data = dataList
                         when (flag) {
                             true -> SQLiteOpenHelper(context).updateBookListData(bookName!!, title)
                             else -> SQLiteOpenHelper(context).insertBookListData(bookName!!, title)
@@ -49,8 +58,9 @@ class ParseData(val context: Context) {
                         SQLiteOpenHelper(context).insertBookContentData(bookName!!, title, content)
 
                         if (parseNextChapter().contains("html")) {
-                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!)
+                            getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!, adapter = adapter, dataList = dataList, position = position)
                         }
+
                         println("parseTitle() = ${parseTitle()}")
                         println("parseBookName() = ${parseBookName()}")
                         println("parseContext() = ${parseContext()}")

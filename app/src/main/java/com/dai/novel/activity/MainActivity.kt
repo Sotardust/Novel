@@ -1,16 +1,15 @@
-package com.dai.novel
+package com.dai.novel.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.dai.novel.R
 import com.dai.novel.adapter.BaseRecyclerAdapter
 import com.dai.novel.adapter.BookListAdapter
 import com.dai.novel.booklist.ChapterListActivity
 import com.dai.novel.database.BookList
 import com.dai.novel.database.SQLiteOpenHelper
-import com.dai.novel.util.ParseData
 import com.dai.novel.util.SpaceItemDecoration
-import com.dai.novel.util.URLUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -48,9 +47,12 @@ class MainActivity : BaseActivity() {
             }
         })
 
-
-        textView.setOnClickListener { ParseData(applicationContext).getNetNovelData(URLUtil().getUrl("/1_1094/5386270.html"), "一念永恒") }
-        textView1.setOnClickListener { ParseData(applicationContext).getNetNovelData(URLUtil().getUrl("/1_1583/7778655.html"), "圣墟") }
+        addOrUpdate.setOnClickListener {
+            val intent = Intent().setClass(this, ObtainNovelActivity::class.java)
+            intent.putStringArrayListExtra("name",nameList)
+            intent.putStringArrayListExtra("title",titleList)
+            startActivity(intent)
+        }
     }
 
 }

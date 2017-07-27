@@ -15,14 +15,13 @@ open class OkHttpUtils {
 
     fun getSingleGetRequest(url: String): Single<String> {
 
-
         return Single.create(SingleOnSubscribe<String> { emitter ->
             val okHttpClient = OkHttpClient();
             val request = Request.Builder()
                     .url(url)
                     .build()
             val response = okHttpClient.newCall(request).execute();
-            val content = response.body().string();
+            val content = response.body()?.string();
 //            println("content = ${content}")
             emitter.onSuccess(content)
 

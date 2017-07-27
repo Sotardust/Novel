@@ -2,7 +2,7 @@ package com.dai.novel.booklist
 
 import android.os.Bundle
 import android.text.Html
-import com.dai.novel.BaseActivity
+import com.dai.novel.activity.BaseActivity
 import com.dai.novel.R
 import com.dai.novel.database.SQLiteOpenHelper
 import io.reactivex.Single

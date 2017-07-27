@@ -1,4 +1,4 @@
-package com.dai.novel
+package com.dai.novel.application
 
 import android.app.Application
 import com.dai.novel.database.SQLiteOpenHelper

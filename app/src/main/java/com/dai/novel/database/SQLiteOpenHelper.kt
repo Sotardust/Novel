@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Environment
-import com.dai.novel.NovelApplication
+import com.dai.novel.application.NovelApplication
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.update
 import org.json.JSONObject
