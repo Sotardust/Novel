@@ -5,10 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import com.dai.novel.R
 import com.dai.novel.adapter.BaseRecyclerAdapter
 import com.dai.novel.adapter.ObtainNovelAdapter
-import com.dai.novel.util.OkHttpUtils
-import com.dai.novel.util.ParseData
-import com.dai.novel.util.SpaceItemDecoration
-import com.dai.novel.util.URLUtil
+import com.dai.novel.adapter.SearchAdapter
+import com.dai.novel.util.*
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.actvity_obtain_novel.*
@@ -27,6 +25,8 @@ class ObtainNovelActivity : BaseActivity() {
         val nameList = ArrayList<String>()
         obtainRecycler.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         obtainRecycler.addItemDecoration(SpaceItemDecoration(2))
+        searchRecycler.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        searchRecycler.addItemDecoration(SpaceItemDecoration(2))
 //        nameList.mapTo(dataList) { it -> "获取${it}最新章节数据" }
         nameList.add("一念永恒")
         nameList.add("圣墟")
@@ -49,19 +49,36 @@ class ObtainNovelActivity : BaseActivity() {
         })
 
         search.setOnClickListener {
+            println("++++++++")
             searchNovel(editText.text.toString())
         }
     }
 
     fun searchNovel(name: String) {
-        val url = "http://zhannei.baidu.com/cse/search?q=$name&click=1&s=2758772450457967865&nsid="
-        OkHttpUtils().getSingleGetRequest(url)
+
+        OkHttpUtils().getSingleGetRequest(URLUtil().searchUrl(name))
                 .subscribe(object : SingleObserver<String> {
                     override fun onSubscribe(d: Disposable?) {
                     }
 
-                    override fun onSuccess(t: String?) {
-                        println("t = ${t}")
+                    override fun onSuccess(value: String?) {
+                        val adapter = SearchAdapter()
+                        val nameList = ArrayList<String>()
+                        val authorList = ArrayList<String>()
+                        val chapterList = ArrayList<String>()
+                        val introductionList = ArrayList<String>()
+                        val resultList = ParseSearchResult().getParseResult(value!!)
+                        for ((bookName, introduction, author, _, _, chapter, _) in resultList) {
+                            nameList.add(bookName)
+                            authorList.add(author)
+                            introductionList.add(introduction)
+                            chapterList.add(chapter)
+                        }
+                        adapter.data = nameList
+                        adapter.author = authorList
+                        adapter.chapter = chapterList
+                        adapter.introduction = introductionList
+                        searchRecycler.adapter = adapter
                     }
 
                     override fun onError(e: Throwable?) {

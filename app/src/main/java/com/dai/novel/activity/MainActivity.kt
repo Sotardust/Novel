@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.dai.novel.R
+import com.dai.novel.activity.booklist.ChapterListActivity
 import com.dai.novel.adapter.BaseRecyclerAdapter
 import com.dai.novel.adapter.BookListAdapter
-import com.dai.novel.booklist.ChapterListActivity
 import com.dai.novel.database.BookList
 import com.dai.novel.database.SQLiteOpenHelper
 import com.dai.novel.util.SpaceItemDecoration
@@ -18,6 +18,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        println("**********************")
 //
         val adapter = BookListAdapter()
         val nameList = ArrayList<String>()

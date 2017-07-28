@@ -10,4 +10,5 @@ open class URLUtil {
     // url = http://www.biqukan.com/1_1094/5386270.html 一念永恒
     fun getUrl(nextChapter: String): String = "http://www.biqukan.com" + nextChapter;
 //    fun getUrl(): String = "http://www.biqukan.com/1_1094/15283982.html";
+    fun searchUrl(name:String):String = "http://zhannei.baidu.com/cse/search?q=$name&click=1&s=2758772450457967865&nsid="
 }

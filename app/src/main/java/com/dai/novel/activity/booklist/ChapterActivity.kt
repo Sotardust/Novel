@@ -1,4 +1,4 @@
-package com.dai.novel.booklist
+package com.dai.novel.activity.booklist
 
 import android.os.Bundle
 import android.text.Html

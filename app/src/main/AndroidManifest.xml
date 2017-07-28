@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".booklist.ChapterActivity" />
-        <activity android:name=".booklist.ChapterListActivity" />
-        <activity android:name=".booklist.BookListActivity" />
+        <activity android:name="com.dai.novel.activity.booklist.ChapterActivity" />
+        <activity android:name="com.dai.novel.activity.booklist.ChapterListActivity" />
+        <activity android:name="com.dai.novel.activity.booklist.BookListActivity" />
         <activity android:name=".activity.ObtainNovelActivity"/>
     </application>
 

@@ -43,4 +43,7 @@ dependencies {
 
     compile "org.jetbrains.anko:anko:0.10.1"
     compile "org.jetbrains.anko:anko-sqlite:0.10.1"
+
+    //https://jsoup.org/download
+    compile 'org.jsoup:jsoup:1.10.2'
 }

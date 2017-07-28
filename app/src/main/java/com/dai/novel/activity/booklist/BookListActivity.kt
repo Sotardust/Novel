@@ -1,4 +1,4 @@
-package com.dai.novel.booklist
+package com.dai.novel.activity.booklist
 
 import com.dai.novel.activity.BaseActivity
 
