@@ -13,8 +13,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class JavaFiles {
+
     private void getSingleGetRequest() {
-         Single.create(new SingleOnSubscribe<String>() {
+        Single.create(new SingleOnSubscribe<String>() {
             @Override
             public void subscribe(SingleEmitter<String> e) throws Exception {
 
@@ -37,5 +38,11 @@ public class JavaFiles {
 
                     }
                 });
+    }
+
+
+    private void test(int a, int b) {
+        if (a > b) return;
+        if (a < b) System.out.println("a = " + a);
     }
 }

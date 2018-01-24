@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +25,8 @@
         <activity android:name="com.dai.novel.activity.booklist.ChapterListActivity" />
         <activity android:name="com.dai.novel.activity.booklist.BookListActivity" />
         <activity android:name=".activity.ObtainNovelActivity"/>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.login.RegisterActivity"/>
     </application>
 
 </manifest>
