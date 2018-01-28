@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
 class ParseData(val context: Context) {
 
 
-    var string: String? = null;
+    var string: String? = null
 
     fun getNetNovelData(url: String, key: String, adapter: ObtainNovelAdapter, dataList: ArrayList<String>, position: Int) {
 
@@ -28,17 +28,18 @@ class ParseData(val context: Context) {
         var bookName: String? = null
         OkHttpUtils().getSingleGetRequest(mURL)
                 .subscribe(object : SingleObserver<String> {
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         e?.printStackTrace()
                         if (parseNextChapter().contains("html")) {
                             getNetNovelData(url = URLUtil().getUrl(nextChapter = parseNextChapter()), key = bookName!!, adapter = adapter, dataList = dataList, position = position)
                         }
                     }
 
-                    override fun onSubscribe(d: Disposable?) {
+                    override fun onSubscribe(d: Disposable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
 
-                    override fun onSuccess(value: String?) {
+                    override fun onSuccess(value: String) {
                         string = value
                         val title = parseTitle()
                         val content = parseContext()
@@ -68,7 +69,6 @@ class ParseData(val context: Context) {
                         println("parseIndexNumber() = ${parseIndexNumber()}")
                         println("parseNextChapter() = ${parseNextChapter()}")
                     }
-
                 })
     }
 

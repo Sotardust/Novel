@@ -19,8 +19,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        println("**********************")
-//
         val adapter = BookListAdapter()
         val nameList = ArrayList<String>()
         val titleList = ArrayList<String>()

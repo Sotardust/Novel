@@ -34,6 +34,9 @@ class ObtainNovelActivity : BaseActivity() {
         dataList.add("获取圣墟最新章节数据")
         nextChapterList.add("/1_1094/5386270.html")
         nextChapterList.add("/1_1583/7778655.html")
+
+
+        println("obtainRecycler = ${obtainRecycler}")
         adapter.data = dataList
         obtainRecycler.adapter = adapter
         adapter.setOnItemClickLister(object : BaseRecyclerAdapter.OnItemClickLister<String> {
@@ -58,16 +61,16 @@ class ObtainNovelActivity : BaseActivity() {
 
         OkHttpUtils().getSingleGetRequest(URLUtil().searchUrl(name))
                 .subscribe(object : SingleObserver<String> {
-                    override fun onSubscribe(d: Disposable?) {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onSuccess(value: String?) {
+                    override fun onSuccess(value: String) {
                         val adapter = SearchAdapter()
                         val nameList = ArrayList<String>()
                         val authorList = ArrayList<String>()
                         val chapterList = ArrayList<String>()
                         val introductionList = ArrayList<String>()
-                        val resultList = ParseSearchResult().getParseResult(value!!)
+                        val resultList = ParseSearchResult().getParseResult(value)
                         for ((bookName, introduction, author, _, _, chapter, _) in resultList) {
                             nameList.add(bookName)
                             authorList.add(author)
@@ -81,10 +84,9 @@ class ObtainNovelActivity : BaseActivity() {
                         searchRecycler.adapter = adapter
                     }
 
-                    override fun onError(e: Throwable?) {
-                        e?.printStackTrace()
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
                     }
-
                 })
 
     }
