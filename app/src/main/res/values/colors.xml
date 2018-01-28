@@ -54,4 +54,7 @@
     <color name="msg_item_time">#9BA5B2</color>
     <color name="msg_item_name_en">#707780</color>
     <color name="top_nav_text">#0088FF</color>
+
+    <color name="login_text">#9BA6B3</color>
+    <color name="login">#0088FF</color>
 </resources>
