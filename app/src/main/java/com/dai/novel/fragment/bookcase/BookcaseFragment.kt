@@ -23,7 +23,7 @@ class BookcaseFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_bookcase, container, false)
 //        btn.setOnClickListener {
-            getResult()
+        getResult()
 //        }
         return view
     }
@@ -36,9 +36,9 @@ class BookcaseFragment : BaseFragment() {
                         btn1.text = t
                     }
 
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         super.onError(e)
-                        e?.printStackTrace()
+                        e.printStackTrace()
 
                     }
                 })

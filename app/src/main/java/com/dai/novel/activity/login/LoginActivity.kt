@@ -87,7 +87,7 @@ class LoginActivity : BaseActivity() {
                             println("登录异常")
                         }
                     }
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         super.onError(e)
                         println("e.toString() = ${e.toString()}")
                     }

@@ -20,7 +20,6 @@ import com.dai.novel.database.BookList
 import com.dai.novel.database.SQLiteOpenHelper
 import com.dai.novel.fragment.bookcase.BookcaseFragment
 import com.dai.novel.fragment.setting.SettingFragment
-import com.dai.novel.util.OkHttpUtils
 import com.dai.novel.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast

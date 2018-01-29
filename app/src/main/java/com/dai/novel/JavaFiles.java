@@ -58,5 +58,13 @@ public class JavaFiles {
         }
     }
 
+    public static OkHttpClient getOkHttpClient() {
+        return okHttpClient;
+    }
+
+    public static void setOkHttpClient(OkHttpClient okHttpClient) {
+        JavaFiles.okHttpClient = okHttpClient;
+    }
+
     public static OkHttpClient okHttpClient =null ;
 }
