@@ -6,6 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.*
 import org.json.JSONObject
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -16,27 +17,36 @@ import java.util.concurrent.TimeUnit
 open class OkHttpUtils {
 
 
-    private var okHttpClient: OkHttpClient? = null
+    var okHttpClient: OkHttpClient = OkHttpClient()
 
-    fun getOkHttpClient(): OkHttpClient? {
+
+    fun setHttpClient() {
+        println("setOkHttpClient ")
+        this.okHttpClient = obtainOkHttpClient()
+    }
+
+    fun getHttpClient(): OkHttpClient {
         return okHttpClient
     }
 
-    fun setOkHttpClient() {
-        okHttpClient = obtainOkHttpClient()
-    }
-
-
-    private fun obtainOkHttpClient(): OkHttpClient {
+     fun obtainOkHttpClient(): OkHttpClient {
         val mBuilder = OkHttpClient.Builder().cookieJar(object : CookieJar {
             private val cookieStore = HashMap<String, List<Cookie>>()
 
             override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
                 cookieStore.put(url.host(), cookies)
+
             }
 
             override fun loadForRequest(url: HttpUrl): List<Cookie> {
                 val cookies = cookieStore[url.host()]
+                if (cookies != null) {
+                    for (cookie in cookies) {
+                        println("cookie = " + cookie)
+                        println("cookie = " + cookie.domain())
+                        println("cookie = " + cookie.name())
+                    }
+                }
                 return cookies ?: ArrayList<Cookie>()
             }
         })
@@ -44,6 +54,7 @@ open class OkHttpUtils {
 //            mBuilder.sslSocketFactory(CSMApplication.getSslSocketFactory(), CSMApplication.getTrustManager())
 //        }
 
+        println("obtainOkHttpClient ")
         return mBuilder.hostnameVerifier { hostname, _ ->
             println("hostname = " + hostname)
             true
@@ -55,13 +66,16 @@ open class OkHttpUtils {
 
     open fun getSingleGetRequest(url: String): Single<String> {
 
+
+        println("getSingleGetRequest getOkHttpClient = ${getHttpClient()}")
         return Single.create(SingleOnSubscribe<String> { emitter ->
-            val okHttpClient = OkHttpClient();
+            //            val okHttpClient = OkHttpClient();
             val request = Request.Builder()
                     .url(url)
                     .build()
-            val response = okHttpClient.newCall(request).execute();
-            val content = response.body()?.string();
+            val response = getHttpClient()?.newCall(request)?.execute();
+            println("getSingleGetRequest response?.headers() = ${response?.headers().toString()}")
+            val content = response?.body()?.string();
 //            println("content = ${content}")
             emitter.onSuccess(content)
 
@@ -71,6 +85,7 @@ open class OkHttpUtils {
 
 
     open fun getSinglePostRequest(url: String, jsonObject: JSONObject): Single<String> {
+        println("getSinglePostRequest getOkHttpClient = ${getHttpClient()}")
         return Single.create(SingleOnSubscribe<String> { e ->
             val formBody = FormBody.Builder()
             val iterator = jsonObject.keys()
@@ -83,8 +98,10 @@ open class OkHttpUtils {
                     .url(url)
                     .post(requestBody)
                     .build()
-            val response = OkHttpClient().newCall(request).execute()
-            e.onSuccess(response.body()!!.string())
+            val response = getHttpClient()?.newCall(request)?.execute()
+
+            println("getSinglePostRequest response?.headers() = ${response?.headers().toString()}")
+            e.onSuccess(response?.body()!!.string())
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

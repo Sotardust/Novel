@@ -19,6 +19,8 @@ open class URLUtil {
     //账号登录地址
     fun loginUrl(): String = "http://39.106.220.113:8080/mobile/login";
 
+    fun getAccountUrl(): String = "http://39.106.220.113:8080/mobile/get_accounts";
+
     fun testUrl(): String = "http://39.106.220.113:8080/mobile/list";
 
 }
