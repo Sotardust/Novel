@@ -1,15 +1,13 @@
 package com.dai.novel.activity.login
 
-//import com.dai.novel.util.toast
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import com.dai.novel.R
 import com.dai.novel.activity.BaseActivity
+import com.dai.novel.adapter.inter.XSingleObserverAdapter
 import com.dai.novel.util.OkHttpUtils
 import com.dai.novel.util.URLUtil
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.actvity_register.*
 import org.jetbrains.anko.toast
 import org.json.JSONObject
@@ -27,9 +25,9 @@ class RegisterActivity : BaseActivity() {
     //注册账号
     fun registerHandler() {
         register.setOnClickListener {
-            val userValue = username.text.toString();
-            val firstValue = firstInput.text.toString();
-            val secondValue = secondInput.text.toString();
+            val userValue = username.text.toString()
+            val firstValue = firstInput.text.toString()
+            val secondValue = secondInput.text.toString()
             if (TextUtils.isEmpty(userValue) || TextUtils.isEmpty(firstValue) || TextUtils.isEmpty(secondValue)) {
                 toast("账号或密码不能为空")
                 return@setOnClickListener
@@ -54,19 +52,20 @@ class RegisterActivity : BaseActivity() {
         json.put("account", account)
         json.put("password", password)
         OkHttpUtils().getSinglePostRequest(URLUtil().registerUrl(), json)
-                .subscribe(object : SingleObserver<String> {
-                    override fun onSubscribe(d: Disposable) {
-
+                .subscribe(object : XSingleObserverAdapter<String>() {
+                    override fun onSuccess(t: String) {
+                        try {
+                            val json = JSONObject(t)
+                            val success = json.getInt("success")
+                            if (success == 1) toast("账号注册成功")
+                            else toast(json.getString("error"))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
 
-                    override fun onSuccess(value: String) {
-                        val json = JSONObject(value)
-                        val success = json.getInt("success")
-                        if (success == 1) toast("账号注册成功")
-                        else toast(json.getString("error"))
-                    }
-
-                    override fun onError(e: Throwable) {
+                    override fun onError(e: Throwable?) {
+                        super.onError(e)
                         println("e.toString() = ${e.toString()}")
                     }
                 })

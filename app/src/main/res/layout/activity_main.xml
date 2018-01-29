@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/line_gray"
     android:orientation="vertical"
     tools:context="com.dai.novel.activity.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/bookListRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 
     <TextView
@@ -20,7 +19,26 @@
         android:layout_height="50dp"
         android:background="@color/white1"
         android:gravity="center"
-        android:text="添加或更新小说最新章节" />
+        android:text="添加或更新小说最新章节"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_gray" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/AppTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white" />
 
 
 </LinearLayout>

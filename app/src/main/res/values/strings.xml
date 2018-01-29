@@ -14,5 +14,8 @@
     <string name="input_pwd_again">请再次输入密码</string>
     <string name="existing_account">已有账号</string>
 
-
+    <string-array name="novel_tab">
+        <item>书架</item>
+        <item>账户</item>
+    </string-array>
 </resources>

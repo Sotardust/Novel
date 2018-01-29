@@ -1,5 +1,8 @@
 package com.dai.novel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
@@ -7,6 +10,8 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cookie;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by dai on 2017/7/24.
@@ -40,9 +45,18 @@ public class JavaFiles {
                 });
     }
 
+    List<Cookie> cookies = new ArrayList<>();
 
     private void test(int a, int b) {
         if (a > b) return;
         if (a < b) System.out.println("a = " + a);
+
+        for(Cookie cookie:cookies){
+            System.out.println("cookie = " + cookie);
+            System.out.println("cookie = " + cookie.domain());
+            System.out.println("cookie = " + cookie.name());
+        }
     }
+
+    public static OkHttpClient okHttpClient =null ;
 }
