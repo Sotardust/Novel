@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_CODE)
         }
         setOnClickListener()
@@ -65,7 +65,7 @@ class LoginActivity : BaseActivity() {
 //            return
 //        }
 //        postData(account, password)
-        postData("xiao", "1")
+        postData("xiao", "123456")
     }
 
     private fun postData(account: String, password: String) {

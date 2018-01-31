@@ -44,7 +44,7 @@ open class OkHttpUtils {
                         println("cookies != null = ${cookies != null}")
                         println("cookies != null = ${cookies?.size}")
                         if (cookies != null) {
-                            for (cookie in cookies){
+                            for (cookie in cookies) {
                                 println("cookie = ${cookie.domain()}")
                                 println("cookie = ${cookie.name()}")
                                 println("cookie = ${cookie.path()}")
@@ -101,10 +101,16 @@ open class OkHttpUtils {
                     .post(requestBody)
                     .build()
             val response = getHttpClient()?.newCall(request)?.execute()
+            if (url == URLUtil().loginUrl()) {
+                println("request = ${request.headers()}")
+            }
 
             e.onSuccess(response?.body()!!.string())
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun requestBuilder(): Request.Builder {
+        return Request.Builder()
+    }
 }
