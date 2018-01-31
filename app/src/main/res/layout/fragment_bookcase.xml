@@ -15,6 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/space_50"
         android:text="获取所有账号" />
+    <TextView
+        android:id="@+id/btnList"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/space_50"
+        android:text="获取list" />
 
     <TextView
         android:id="@+id/btn1"

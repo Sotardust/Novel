@@ -5,5 +5,8 @@
 /.idea/libraries
 .DS_Store
 /build
+/build.gradle
+/gradle/wrapper/gradle-wrapper.properties
 /captures
 .externalNativeBuild
+app/libs/

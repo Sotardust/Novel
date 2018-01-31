@@ -1,6 +1,5 @@
 package com.dai.novel.util
 
-import com.dai.novel.JavaFiles
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,17 +34,26 @@ open class OkHttpUtils {
                     private val cookieStore = HashMap<String, List<Cookie>>()
 
                     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+                        println("url = [${url}], cookies = [${cookies}]")
                         cookieStore.put(url.host(), cookies)
                     }
 
                     override fun loadForRequest(url: HttpUrl): List<Cookie> {
                         val cookies = cookieStore[url.host()]
+                        println("url = [${url}]")
+                        println("cookies != null = ${cookies != null}")
+                        println("cookies != null = ${cookies?.size}")
+                        if (cookies != null) {
+                            for (cookie in cookies){
+                                println("cookie = ${cookie.domain()}")
+                                println("cookie = ${cookie.name()}")
+                                println("cookie = ${cookie.path()}")
+                                println("cookie = ${cookie.value()}")
+                            }
+                        }
                         return cookies ?: ArrayList<Cookie>()
                     }
                 })
-//        if (CSMApplication.getSslSocketFactory() != null) {
-//            mBuilder.sslSocketFactory(CSMApplication.getSslSocketFactory(), CSMApplication.getTrustManager())
-//        }
 
         println("obtainOkHttpClient ")
         return mBuilder.hostnameVerifier { hostname, _ ->
@@ -59,7 +67,6 @@ open class OkHttpUtils {
 
     open fun getSingleGetRequest(url: String): Single<String> {
 
-
         println("getSingleGetRequest getOkHttpClient = ${getHttpClient()}")
         return Single.create(SingleOnSubscribe<String> { emitter ->
             //            val okHttpClient = OkHttpClient();
@@ -68,12 +75,12 @@ open class OkHttpUtils {
                     .build()
             val response = getHttpClient()?.newCall(request)?.execute()
             println("getSingleGetRequest response?.headers() = ${response?.headers().toString()}")
+            println("getSingleGetRequest response?.headers() = ${request.headers().toMultimap()}")
             val content = response?.body()?.string()
 //            println("content = ${content}")
             if (content != null) {
                 emitter.onSuccess(content)
             }
-
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
