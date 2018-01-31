@@ -38,10 +38,8 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tabsTitle = resources.getStringArray(R.array.novel_tab)
-
         initTabTitle()
         initFragment()
-        println("**********************")
         val adapter = BookListAdapter()
         val nameList = ArrayList<String>()
         val titleList = ArrayList<String>()
@@ -57,7 +55,6 @@ class MainActivity : BaseActivity() {
         bookListRecycler.adapter = adapter
         adapter.setOnItemClickLister(object : BaseRecyclerAdapter.OnItemClickLister<String> {
             override fun onItemClick(position: Int, data: String) {
-                println("data = ${data}")
                 toast(data)
                 val intent = Intent().setClass(applicationContext, ChapterListActivity::class.java)
                 intent.putExtra("tableName", data)

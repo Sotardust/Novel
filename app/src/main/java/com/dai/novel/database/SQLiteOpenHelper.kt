@@ -70,7 +70,6 @@ open class SQLiteOpenHelper(ctx: Context) {
             for (li in list) {
                 content = li
             }
-            println("content = ${content}")
         }
         return content!!
     }
