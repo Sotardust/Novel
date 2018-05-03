@@ -28,7 +28,7 @@ open class SQLiteOpenHelper(ctx: Context) {
      **/
     val bookAllList = ArrayList<JSONObject>();
 
-    val context = ctx
+    val context = ctx.applicationContext
 
     fun isCreateMainFileSuccess(): Boolean {
         var isSuccess = false
